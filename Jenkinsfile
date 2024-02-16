@@ -3,7 +3,7 @@ pipeline{
     stages{
         stage("sonar quality check"){
             agent{
-                docker{
+                docker {
                     // As java is required 
                     image 'openjdk:11'
                 }

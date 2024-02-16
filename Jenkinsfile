@@ -16,6 +16,13 @@ pipeline{
                         sh './gradlew sonarqube'  //execute sq, pushes code to sq
                     }
 
+                     timeout(time: 1, unit: 'HOURS') {
+                      def qg = waitForQualityGate()  //it checks the json and stores at qg
+                      if (qg.status != 'OK') { //if status is not ok, it will give error and stop the pipeline
+                           error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                      }
+                    }
+
                 }
             }
         }

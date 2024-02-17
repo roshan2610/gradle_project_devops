@@ -1,5 +1,9 @@
 pipeline{
     agent any
+    environment{
+        //taking this from jenkins env var
+        VERSION = "${env.BUILD_ID}"
+    }
     stages{
         stage("sonar quality check"){
             agent{
@@ -23,6 +27,24 @@ pipeline{
                       }
                     }
 
+                }
+            }
+        }
+        stage("Docker build and docker push")
+        {
+            steps{
+                script{
+                    // tag the image
+                    //remove image for disk space mngmnt
+                    withCredentials([string(credentialsId: 'docker_pass', variable: 'docker_password')]) 
+                    {
+                        sh '''
+                            docker build -t 44.211.196.74:8083/springapp:${VERSION} .
+                            docker login -u admin -p $docker_password 44.211.196.74:8083
+                            docker push 44.211.196.74:8083/springapp:${VERSION}
+                            docker rmi 44.211.196.74:8083/springapp:${VERSION}
+                        '''
+                    }
                 }
             }
         }

@@ -36,13 +36,15 @@ pipeline{
                 script{
                     // tag the image
                     //remove image for disk space mngmnt
+                    //nexus machine ip address with build version
+
                     withCredentials([string(credentialsId: 'docker_pass', variable: 'docker_password')]) 
                     {
                         sh '''
-                            docker build -t 44.211.196.74:8083/springapp:${VERSION} .
-                            docker login -u admin -p $docker_password 44.211.196.74:8083
-                            docker push 44.211.196.74:8083/springapp:${VERSION}
-                            docker rmi 44.211.196.74:8083/springapp:${VERSION}
+                            docker build -t 3.83.127.87:8083/springapp:${VERSION} .
+                            docker login -u admin -p $docker_password 3.83.127.87:8083
+                            docker push 3.83.127.87:8083/springapp:${VERSION}
+                            docker rmi 3.83.127.87:8083/springapp:${VERSION}
                         '''
                     }
                 }

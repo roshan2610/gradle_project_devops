@@ -37,6 +37,7 @@ pipeline{
                     // tag the image
                     //remove image for disk space mngmnt
                     //nexus machine ip address with build version
+                    //8083 is http port which allowed in nexus 
 
                     withCredentials([string(credentialsId: 'docker_pass', variable: 'docker_password')]) 
                     {

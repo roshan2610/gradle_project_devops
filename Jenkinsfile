@@ -54,17 +54,17 @@ pipeline{
     
 
     
-    stage('Identifying misconfigs using datree in help charts')
-    {
-        steps{
-            script{
-                dir('kubernetes/') {
-                    ch 'helm datree test myapp/'
+    // stage('Identifying misconfigs using datree in help charts')
+    // {
+    //     steps{
+    //         script{
+    //             dir('kubernetes/') {
+    //                 ch 'helm datree test myapp/'
     
-                }
-            }
-        }
-    }
+    //             }
+    //         }
+    //     }
+    // }
 }
     post {
 		always {

@@ -47,27 +47,28 @@ pipeline{
                             docker push 44.203.184.35:8083/springapp:${VERSION}
                             docker rmi 44.203.184.35:8083/springapp:${VERSION}
                         '''
-                    }
+                    } 
                 }
             }
         }
-    }
+    
 
-    post {
-		always {
-			mail bcc: '', body: "<br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br> URL de build: ${env.BUILD_URL}", cc: '', charset: 'UTF-8', from: '', mimeType: 'text/html', replyTo: '', subject: "${currentBuild.result} CI: Project name -> ${env.JOB_NAME}", to: "roshandpatil07@gmail.com";  
-		}
-	}
+    
     stage('Identifying misconfigs using datree in help charts')
     {
         steps{
             script{
                 dir('kubernetes/') {
-                    //took this command from datree.io to trigger datree policy check via helm cli
                     ch 'helm datree test myapp/'
     
                 }
             }
         }
     }
+}
+    post {
+		always {
+			mail bcc: '', body: "<br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br> URL de build: ${env.BUILD_URL}", cc: '', charset: 'UTF-8', from: '', mimeType: 'text/html', replyTo: '', subject: "${currentBuild.result} CI: Project name -> ${env.JOB_NAME}", to: "roshandpatil07@gmail.com";  
+		}
+	}
 }
